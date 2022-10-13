@@ -1,0 +1,6 @@
+{
+    "scripts": [
+        "vector.js",
+        "main.js"
+    ]
+}

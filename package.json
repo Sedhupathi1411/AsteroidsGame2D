@@ -1,0 +1,23 @@
+{
+  "name": "asteroids-game",
+  "version": "1.0.0",
+  "description": "Asteroid Game 2D",
+  "main": "index.js",
+  "scripts": {
+    "watch": "tsc compiler/index && node compiler/index watch",
+    "build": "tsc compiler/index && node compiler/index build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sedhupathi1411/asteroids-game.git"
+  },
+  "author": "Sedhupathi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Sedhupathi1411/asteroids-game/issues"
+  },
+  "homepage": "https://github.com/Sedhupathi1411/asteroids-game#readme",
+  "devDependencies": {
+    "@types/node": "^18.8.5"
+  }
+}
