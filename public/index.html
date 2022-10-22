@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asteriods Game 2D</title>
+    <style>
+        * {
+            margin: 0;
+        }
+        body {
+            background: black;
+            color: white;
+            font-family: 'Courier New', Courier, monospace;
+            overflow: hidden;
+        }
+        canvas {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+        }
+        #fScreen {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            font-size: 10vh;
+            text-align: center;
+            z-index: 200;
+            font-weight: bolder;
+        }
+        #fScreen span {
+            font-size: 5vh;
+        }
+        #score {
+            position: absolute;
+            width: 100%;
+            height: 10vh;
+            line-height: 10vh;
+            text-align: right;
+            z-index: 100;
+            font-size: 5vh;
+        }
+    </style>
+</head>
+<body>
+    <div id="score"></div>
+    <div id="fScreen">
+        Asteriods Game 2D <br />
+        <span>(Click 2 Play)</span>
+    </div>
+    <script src="./main.js"></script>
+</body>
+</html>

@@ -1,4 +1,8 @@
-class Vector {
+import { cos, findHyp, round, sin, tan } from "./math";
+
+type Vec2 = [number, number];
+
+export class Vector {
     constructor(public x = 0, public y = 0) {}
 
     set(x: number, y: number) { this.x = x; this.y = y; }
@@ -32,25 +36,29 @@ class Vector {
     clone() { return new Vector(this.x, this.y); }
 
     rotate(a: number) {
+        if(a == 0) return;
         let t = this.angle;
         let r = this.mag;
-        // this.set()
-        // TODO:
+        this.x = cos(t - a);
+        this.y = sin(t - a);
+        this.mult(r);
     }
+
+    toZero() { this.x = 0; this.y = 0; }
 
     // Accessors
 
     get mag() {
-        return Math.sqrt((this.x * this.x) + (this.y + this.y));
+        return (findHyp(this.x, this.y));
     }
 
     set mag(r: number) {
         if(this.x == 0 && this.y == 0) return;
         let angle = this.angle;
-        this.set(r * Math.cos(angle), r * Math.sin(angle));
+        this.set(r * cos(angle), r * sin(angle));
     }
 
-    get angle() { return Math.atan2(this.y, this.x); }
+    get angle() { return tan(this.x, this.y); }
 
     get i() { return new Vector(this.x, 0); }
     get j() { return new Vector(0, this.y); }
@@ -59,26 +67,34 @@ class Vector {
     // Static Methods
 
     static Add(...vectors: Vector[]) {
-        let sumV = new Vector;
-        vectors.forEach(v => sumV.add(v));
+        let res = new Vector;
+        vectors.forEach(v => res.add(v));
+        return res;
     }
 
-    static Sub(...vectors: Vector[]) {
-        let sumV = new Vector;
-        vectors.forEach(v => sumV.sub(v));
+    static Sub(v1: Vector, v2: Vector) {
+        let res = v1.clone();
+        res.sub(v2);
+        return res;
     }
 
     static Mult(...vectors: Vector[]) {
-        let sumV = new Vector;
-        vectors.forEach(v => sumV.mult(v));
+        let res = new Vector;
+        vectors.forEach(v => res.mult(v));
+        return res;
     }
 
     static Div(...vectors: Vector[]) {
-        let sumV = new Vector;
-        vectors.forEach(v => sumV.div(v));
+        let res = new Vector;
+        vectors.forEach(v => res.div(v));
+        return res;
     }
 
     static Dist(v1: Vector, v2: Vector) {
         return Math.sqrt(Math.pow(v1.x - v2.x, 2) + Math.pow(v1.y - v2.y, 2));
+    }
+
+    static From(...args: Vec2[]): Vector[] {
+        return args.map(vec2 => new Vector(vec2[0], vec2[1]));
     }
 }
