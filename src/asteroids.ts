@@ -7,8 +7,7 @@ import { chooseOne, cos, random, sin } from "./utils/math";
 import { Polygon } from "./utils/primitives";
 import { Vector } from "./utils/vector";
 
-
-export const minR = 40, R = 70, maxR = 80;
+export const minR = 80, R = 90, maxR = 100;
 const maxSpeed = CONSTANTS.ASTEROID_MAXSPEED;
 const minSpeed = CONSTANTS.ASTEROID_MAXSPEED;
 const minL = R * (Math.PI / 8), maxL = R * (Math.PI / 2);
@@ -90,7 +89,8 @@ export function generateAsteroid(): Asteroid {
 export class PolygonsM {
     static asteroids: IPolygon[] = [];
 
-    static Init(player: Player, count = 5) {
+    static Init(player: Player) {
+        var count = CONSTANTS.INITIAL_ASTEROIDS_COUNT
         this.asteroids.push(player);
         for (let i = 0; i < count; i++) {
             this.asteroids.push(generateAsteroid());

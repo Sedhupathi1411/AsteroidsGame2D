@@ -13,7 +13,7 @@ function startGame() {
 
     // Setup
     Game.Init();
-    PolygonsM.Init(player, CONSTANTS.INITIAL_ASTEROIDS_COUNT);
+    PolygonsM.Init(player);
     FireGun.Init();
 
 
@@ -55,8 +55,7 @@ window.onload = () => {
 
     // Setup
     Game.Init();
-    try { PolygonsM.Init(new Rocket(new Vector(Game.width / 2, Game.height / 2)), 5); }
-    catch { window.location.reload(); }
+    PolygonsM.Init(new Rocket(new Vector(Game.width / 2, Game.height / 2)));
 
     // Update
     function updateLoop() {
@@ -70,13 +69,13 @@ window.onload = () => {
 
     window.onclick = window.onkeydown = () => {
         cancelAnimationFrame(animhandler);
-        window.onclick = window.onkeydown = () => {}
+        window.onclick = window.onkeydown = () => { }
         Game.Life = 3;
         Game.score = 0;
         document.body.removeChild(document.getElementById("fScreen"));
         document.body.requestFullscreen().then(() => {
             startGame();
-        }).catch(console.warn);
+        });
     }
 }
 
