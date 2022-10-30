@@ -19,6 +19,8 @@ export class Game {
     }
 
     static GameOver() {
-        document.body.innerHTML = '<div id="fScreen">Game Over!<br /> <span>Score: ' + Math.ceil(this.score) + '</span></div>';
+        document.exitFullscreen();
+        document.body.innerHTML = '<div id="fScreen">Game Over!<br /> <span>Score: ' + Math.ceil(this.score) + '<br /><br />(Click 2 Replay)</span></div>';
+        window.onclick = () => document.location.reload();
     }
 }

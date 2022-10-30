@@ -26,7 +26,7 @@ function startGame() {
             FireGun.restart();
             cancelAnimationFrame(animhandler);
             if (Game.isGameOver) Game.GameOver();
-            else setTimeout(startGame, 200);
+            else setTimeout(startGame, CONSTANTS.REFRESH_TIME);
             return;
         }
 

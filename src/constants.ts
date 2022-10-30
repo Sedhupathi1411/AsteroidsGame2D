@@ -11,5 +11,7 @@ export const CONSTANTS = {
         LEVEL_UP: 500,
         BURST: 150,
         HIT: 50
-    }
+    },
+
+    REFRESH_TIME: 500
 };
