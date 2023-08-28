@@ -19,7 +19,8 @@ export class Game {
     }
 
     static async GameOver() {
-        await document.exitFullscreen();
+        try { await document.exitFullscreen(); }
+        catch {/* empty */}
         document.body.innerHTML = '<div id="fScreen"><h1>Game Over!</h1><br /> <h3>Score: ' + Math.ceil(this.score) + '<br /><br />(Click 2 Replay)</h3></div>';
         setTimeout(() => window.onclick = () => document.location.reload(), 300);
     }
