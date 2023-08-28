@@ -1,20 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Done by Sedhupathi R | https://github.com/Sedhupathi1411">
     <title>Asteriods Game 2D</title>
     <style>
         * {
-            margin: 0;
+            margin: 0px;
+            padding: 0px;
         }
+
         body {
             background: black;
             color: white;
             font-family: 'Courier New', Courier, monospace;
             overflow: hidden;
         }
+
         canvas {
             position: absolute;
             left: 0;
@@ -22,20 +27,22 @@
             width: 100%;
             height: 100%;
         }
+
+        h1 {
+            font-size: 10vw;
+        }
+
         #fScreen {
             position: absolute;
             left: 0;
             top: 50%;
             width: 100%;
-            font-size: 10vh;
             text-align: center;
             z-index: 200;
             font-weight: bolder;
             transform: translate(0%, -50%);
         }
-        #fScreen span {
-            font-size: 5vh;
-        }
+
         #score {
             position: absolute;
             width: 100%;
@@ -45,14 +52,82 @@
             z-index: 100;
             font-size: 5vh;
         }
+
+        .controls {
+            display: none;
+            position: absolute;
+            bottom: 0%;
+            left: 0%;
+            width: 100%;
+            margin: 10px;
+            /* width: 100%; */
+            z-index: 500;
+            --btn-size: 80px;
+            --padding-size: 20px;
+        }
+
+        .up-btn,
+        .left-btn,
+        .right-btn {
+            height: calc(var(--btn-size) - 2 * var(--padding-size));
+            width: calc(var(--btn-size) - 2 * var(--padding-size));
+            padding: var(--padding-size);
+            border: 2px solid white;
+            border-radius: 10px;
+            opacity: 0.5;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: 70% auto;
+            display: inline-flex;
+        }
+
+        .controls .up-btn {
+            margin-left: calc(4px + var(--btn-size) / 2);
+        }
+
+        .controls .left-btn {
+            transform: rotate(-90deg);
+        }
+
+        .controls .right-btn {
+            transform: rotate(90deg);
+        }
+
+        .fire-btn {
+            position: absolute;
+            bottom: 0px;
+            right: 20px;
+            height: 80px;
+            width: 80px;
+            padding: 20px;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: 70% auto;
+        }
     </style>
 </head>
+
 <body>
+
     <div id="score"></div>
     <div id="fScreen">
-        Asteriods Game 2D <br />
-        <span>(Click 2 Play)<br />Use Arrow Keys to control player</span>
+        <h1>Asteriods Game 2D</h1>
+        <br /><br />
+        <h3>(Click 2 Play)<br />Use Arrow Keys to control player</h3>
     </div>
     <script src="./main.js"></script>
+
+    <div class="controls">
+        <div class="up-btn"></div>
+        <br />
+        <div class="left-btn"></div>
+        <div class="right-btn"></div>
+
+        <div class="fire-btn"
+            style="background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDEyMi44NyAxMjIuODgiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDEyMi44NyAxMjIuODgiIHhtbDpzcGFjZT0icHJlc2VydmUiPjxnPjxwYXRoIGQ9Ik01Mi4wMSwxMTAuMjJjLTkuOTYtMS45MS0xOC44Ni02Ljc5LTI1Ljc2LTEzLjY4Yy02LjktNi45LTExLjc3LTE1LjgtMTMuNjgtMjUuNzdoNi4yMWMxLjgyLDguMjgsNS45OSwxNS42OCwxMS43OCwyMS40NyBjNS43OCw1Ljc4LDEzLjE4LDkuOTUsMjEuNDYsMTEuNzhWMTEwLjIyTDUyLjAxLDExMC4yMnogTTk2LjMxLDY0LjQ4Yy0xLjY4LDAtMy4wNC0xLjM2LTMuMDQtMy4wNGMwLTEuNjgsMS4zNi0zLjA0LDMuMDQtMy4wNCBoMjMuNTJjMS42OCwwLDMuMDQsMS4zNiwzLjA0LDMuMDRjMCwxLjY4LTEuMzYsMy4wNC0zLjA0LDMuMDRIOTYuMzFMOTYuMzEsNjQuNDhMOTYuMzEsNjQuNDh6IE02NC40OCwyNi41NyBjMCwxLjY4LTEuMzYsMy4wNC0zLjA0LDMuMDRjLTEuNjgsMC0zLjA0LTEuMzYtMy4wNC0zLjA0VjMuMDRDNTguNCwxLjM2LDU5Ljc2LDAsNjEuNDQsMGMxLjY4LDAsMy4wNCwxLjM2LDMuMDQsMy4wNFYyNi41NyBMNjQuNDgsMjYuNTdMNjQuNDgsMjYuNTd6IE02NC40OCwxMTkuODRjMCwxLjY4LTEuMzYsMy4wNC0zLjA0LDMuMDRjLTEuNjgsMC0zLjA0LTEuMzYtMy4wNC0zLjA0Vjk2LjMxYzAtNCw2LjA4LTQsNi4wOCwwVjExOS44NCBMNjQuNDgsMTE5Ljg0TDY0LjQ4LDExOS44NHogTTMuMDQsNjQuNDhDMS4zNiw2NC40OCwwLDYzLjEyLDAsNjEuNDRjMC0xLjY4LDEuMzYtMy4wNCwzLjA0LTMuMDRoMjMuNTJjMS42OCwwLDMuMDQsMS4zNiwzLjA0LDMuMDQgYzAsMS42OC0xLjM2LDMuMDQtMy4wNCwzLjA0SDMuMDRMMy4wNCw2NC40OEwzLjA0LDY0LjQ4eiBNNjEuNDMsNDYuOTRjOC4wMSwwLDE0LjUsNi40OSwxNC41LDE0LjVjMCw4LjAxLTYuNDksMTQuNS0xNC41LDE0LjUgYy04LjAxLDAtMTQuNS02LjQ5LTE0LjUtMTQuNUM0Ni45NCw1My40Myw1My40Myw0Ni45NCw2MS40Myw0Ni45NEw2MS40Myw0Ni45NHogTTEyLjU2LDUxLjkyYzEuOTEtOS45Niw2Ljc5LTE4Ljg2LDEzLjY4LTI1Ljc2IGM2LjktNi45LDE1LjgtMTEuNzgsMjUuNzctMTMuNjl2Ni4yMmMtOC4yOCwxLjgyLTE1LjY4LDUuOTktMjEuNDcsMTEuNzhjLTUuNzgsNS43OC05Ljk2LDEzLjE3LTExLjc3LDIxLjQ1SDEyLjU2TDEyLjU2LDUxLjkyeiBNNzAuODYsMTIuNDZjOS45NywxLjkxLDE4Ljg3LDYuNzksMjUuNzcsMTMuNjljNi45LDYuODksMTEuNzgsMTUuODEsMTMuNjgsMjUuNzdoLTYuMjFjLTEuODItOC4yOC01Ljk5LTE1LjY5LTExLjc4LTIxLjQ3IGMtNS43OC01Ljc5LTEzLjE4LTkuOTYtMjEuNDYtMTEuNzhWMTIuNDZMNzAuODYsMTIuNDZ6IE0xMTAuMzIsNzAuNzdjLTEuOTEsOS45Ni02Ljc5LDE4Ljg3LTEzLjY5LDI1Ljc3IGMtNi45LDYuOS0xNS44LDExLjc4LTI1Ljc3LDEzLjY5di02LjIxYzE2LjU1LTMuNjQsMjkuNjItMTYuNjksMzMuMjUtMzMuMjVIMTEwLjMyTDExMC4zMiw3MC43N3oiIHN0eWxlPSImIzEwOyAgICBmaWxsOiB3aGl0ZTsmIzEwOyIvPjwvZz48L3N2Zz4=');">
+        </div>
+    </div>
+
 </body>
+
 </html>

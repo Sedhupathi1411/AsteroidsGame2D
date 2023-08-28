@@ -5,11 +5,13 @@ import { PolygonsM } from "./asteroids";
 import { FireGun } from "./bullets";
 import { keyStates } from "./events";
 import { Vector } from "./utils/vector";
+import { addControllerToDOM } from "./controls";
 
 
 function startGame() {
     var player = new Player();
     var animhandler = 0;
+    var isOnForeground = true;
 
     // Setup
     Game.Init();
@@ -44,10 +46,17 @@ function startGame() {
             Game.shouldRefresh = true;
         }
 
-        animhandler = requestAnimationFrame(updateLoop);
+        if (isOnForeground) animhandler = requestAnimationFrame(updateLoop);
     }
 
     updateLoop();
+
+    window.onblur = () => isOnForeground = false;
+
+    window.onfocus = () => {
+        isOnForeground = true;
+        updateLoop();
+    }
 }
 
 window.onload = () => {
@@ -73,13 +82,21 @@ window.onload = () => {
         Game.Life = 3;
         Game.score = 0;
         document.body.removeChild(document.getElementById("fScreen"));
-        document.body.requestFullscreen().then(() => {
-            startGame();
-        });
+        document.body.requestFullscreen()
+            .then(() => {
+                if (CONSTANTS.IS_MOBILE_DEVICE) {
+                    screen.orientation.lock("landscape-primary");
+                    addControllerToDOM();
+                    startGame();
+                }
+            })
+            .finally(() => {
+                if (!CONSTANTS.IS_MOBILE_DEVICE) startGame();
+            });
     }
 }
 
 window.onresize = () => {
-    Game.width = innerWidth;
-    Game.height = innerHeight;
+    Game.width = Game.canvas.width = innerWidth;
+    Game.height = Game.canvas.height = innerHeight;
 }

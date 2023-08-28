@@ -12,7 +12,6 @@ window.addEventListener('keydown', (e) => {
     else if(e.key == "ArrowDown") keyStates.y = 1;
 
     if(e.key == " ") keyStates.space = true;
-    
 });
 
 window.addEventListener('keyup', (e) => {

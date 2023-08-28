@@ -1,3 +1,4 @@
+import { CONSTANTS } from "./constants";
 import { keyStates } from "./events";
 import { Game } from "./game";
 import { Polygon } from "./utils/primitives";
@@ -5,23 +6,31 @@ import { Vector } from "./utils/vector";
 
 export class Rocket extends Polygon {
 
-    points = Vector.From([0, -25], [-8, 15], [8, 15]);
+    size = CONSTANTS.ROCKET_SIZE
+    points = Vector.From(
+        [0, -this.size()],
+        [-Math.round(this.size() * 0.3), Math.round(this.size() * 0.5)],
+        [Math.round(this.size() * 0.3), Math.round(this.size() * 0.5)]
+    );
+    // points = Vector.From([0, -25], [-8, 15], [8, 15]);
+
 
     constructor(public center: Vector) {
         super();
+        
     }
 
     vel = new Vector;
     acc = new Vector;
     friction = 0.02;
     rotateSpeed = 2.5;
-    accMag = 0.8;
+    accMag = CONSTANTS.ROCKET_ACC_MAG;
     maxSpeed = 8;
 
     update() {
         // Physics
-        if(this.vel.mag >= this.friction) this.vel.mult(1 - this.friction);
-        if(this.vel.mag < this.maxSpeed) this.vel.add(this.acc);
+        if (this.vel.mag >= this.friction) this.vel.mult(1 - this.friction);
+        if (this.vel.mag < this.maxSpeed) this.vel.add(this.acc);
         this.acc.toZero();
         this.center.add(this.vel);
 
@@ -34,10 +43,10 @@ export class Rocket extends Polygon {
 
 
         // Teleporting
-        if(this.center.x >= Game.width) this.center.x %= Game.width;
-        else if(this.center.x <= 0) this.center.x = Game.width - this.center.x;
-        if(this.center.y >= Game.height) this.center.y %= Game.height;
-        else if(this.center.y <= 0) this.center.y = Game.height - this.center.y;
+        if (this.center.x >= Game.width) this.center.x %= Game.width;
+        else if (this.center.x <= 0) this.center.x = Game.width - this.center.x;
+        if (this.center.y >= Game.height) this.center.y %= Game.height;
+        else if (this.center.y <= 0) this.center.y = Game.height - this.center.y;
     }
 
     rotate(rad: number) {
@@ -51,14 +60,14 @@ export class Player extends Rocket {
     }
 
     update() {
-        if(keyStates.x) this.rotate(this.rotateSpeed * keyStates.x * Math.PI / 180);
-        if(keyStates.y == -1) {
+        if (keyStates.x) this.rotate(this.rotateSpeed * keyStates.x * Math.PI / 180);
+        if (keyStates.y == -1) {
             let dir = this.points[0].dir();
             dir.mult(this.accMag);
             this.acc.add(dir);
         }
 
-        if(Game.Life <= 0) {
+        if (Game.Life <= 0) {
             Game.shouldRefresh = true;
             Game.isGameOver = true;
             return;

@@ -22,7 +22,19 @@ interface IPolygon extends Polygon {
 export class Asteroid extends Polygon {
 
     strength = 7;
-    isDamaged = false;
+    private _isDamaged = false;
+    public get isDamaged() {
+        return this._isDamaged;
+    }
+    public set isDamaged(bool) {
+        if (bool) {
+            if (!this._isDamaged) {
+                setTimeout(() => this._isDamaged = false, 300);
+                this._isDamaged = true;
+            }
+        }
+        else console.error("Can't assign false");
+    }
 
     constructor(
         public center: Vector,
@@ -49,7 +61,7 @@ export class Asteroid extends Polygon {
         else if (this.center.y < -minR) this.center.y = Game.height + minR;
 
         // Reset
-        this.isDamaged = false;
+        // this.isDamaged = false;
     }
 
 }
@@ -93,7 +105,8 @@ export class PolygonsM {
         var count = CONSTANTS.INITIAL_ASTEROIDS_COUNT
         this.asteroids.push(player);
         for (let i = 0; i < count; i++) {
-            this.asteroids.push(generateAsteroid());
+            try { this.asteroids.push(generateAsteroid()); }
+            catch { break; }
         }
     }
 

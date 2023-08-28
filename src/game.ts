@@ -18,9 +18,9 @@ export class Game {
         this.scoreElt.innerHTML = "Life: " + this.Life + " | Score: " + Math.ceil(this.score);
     }
 
-    static GameOver() {
-        document.exitFullscreen();
-        document.body.innerHTML = '<div id="fScreen">Game Over!<br /> <span>Score: ' + Math.ceil(this.score) + '<br /><br />(Click 2 Replay)</span></div>';
-        window.onclick = () => document.location.reload();
+    static async GameOver() {
+        await document.exitFullscreen();
+        document.body.innerHTML = '<div id="fScreen"><h1>Game Over!</h1><br /> <h3>Score: ' + Math.ceil(this.score) + '<br /><br />(Click 2 Replay)</h3></div>';
+        setTimeout(() => window.onclick = () => document.location.reload(), 300);
     }
 }
